@@ -9,5 +9,5 @@ var CleanPattern *regexp.Regexp
 func init() {
 	EventsPattern = regexp.MustCompile(`<li>.*?<\/li>`)
 	RemoveHTMLPattern = regexp.MustCompile(`<[^>]*>`)
-	CleanPattern = regexp.MustCompile(`&#91;1&#93;`)
+	CleanPattern = regexp.MustCompile(`&#91;[1-9]*\d*\d&#93;`)
 }

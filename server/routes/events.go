@@ -69,7 +69,7 @@ func FetchEvents(c *gin.Context) {
 		cleanMatches = append(cleanMatches, data.Event{
 			Year:    year,
 			YearInt: yearInt,
-			Event:   event,
+			Event:   utils.CleanPattern.ReplaceAllString(event, ""),
 		})
 	}
 
