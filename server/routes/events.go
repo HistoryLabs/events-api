@@ -47,16 +47,29 @@ func FetchEvents(c *gin.Context) {
 
 	for _, match := range matches {
 		cleanMatch := utils.RemoveHTMLPattern.ReplaceAllString(match[0], "")
-		year := strings.Split(cleanMatch, "&#8211;")[0]
-		event := strings.Split(cleanMatch, "&#8211;")[1]
+		year := strings.TrimSpace(strings.Split(cleanMatch, "&#8211;")[0])
+		event := strings.TrimSpace(strings.Split(cleanMatch, "&#8211;")[1])
 
-		if err != nil {
-			return
+		var yearInt int
+
+		if strings.Contains(year, "BC") {
+			cleanYear := strings.TrimSpace(strings.ReplaceAll(year, "BC", ""))
+			yearInt, err = strconv.Atoi(cleanYear)
+			yearInt = yearInt * -1
+			if err != nil {
+				return
+			}
+		} else {
+			yearInt, err = strconv.Atoi(year)
+			if err != nil {
+				return
+			}
 		}
 
 		cleanMatches = append(cleanMatches, data.Event{
-			Year:  strings.TrimSpace(year),
-			Event: strings.TrimSpace(event),
+			Year:    year,
+			YearInt: yearInt,
+			Event:   event,
 		})
 	}
 
