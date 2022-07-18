@@ -9,6 +9,7 @@ func Init() {
 	router := gin.Default()
 
 	router.GET("/events", routes.FetchEvents)
+	router.GET("/year", routes.FetchYear)
 
 	router.Run("localhost:5000")
 }
