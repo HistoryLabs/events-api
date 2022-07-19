@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func FetchEvents(c *gin.Context) {
+func FetchDate(c *gin.Context) {
 	month, monthValid := c.GetQuery("month")
 	day, dayValid := c.GetQuery("day")
 
