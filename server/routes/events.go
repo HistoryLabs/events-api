@@ -17,10 +17,36 @@ func FetchEvents(c *gin.Context) {
 
 	if monthValid == false || dayValid == false {
 		c.IndentedJSON(400, gin.H{"message": "You must provide a month and day"})
+		return
+	}
+
+	minYearStr := c.Query("minYear")
+	maxYearStr := c.Query("maxYear")
+
+	var minYear = -500
+	var maxYear = time.Now().Year()
+
+	if len(strings.TrimSpace(minYearStr)) > 0 {
+		minYearInt, err := strconv.Atoi(minYearStr)
+		if err != nil {
+			c.IndentedJSON(400, gin.H{"message": "'minYear' must be a valid integer"})
+			return
+		}
+
+		minYear = minYearInt
+	}
+
+	if len(strings.TrimSpace(maxYearStr)) > 0 {
+		maxYearInt, err := strconv.Atoi(maxYearStr)
+		if err != nil {
+			c.IndentedJSON(400, gin.H{"message": "'maxYear' must be a valid integer"})
+			return
+		}
+
+		maxYear = maxYearInt
 	}
 
 	monthInt, err := strconv.Atoi(month)
-
 	if err != nil {
 		return
 	}
@@ -28,20 +54,16 @@ func FetchEvents(c *gin.Context) {
 	dateStr := time.Month(monthInt).String() + "_" + day
 
 	resp, err := http.Get("https://en.wikipedia.org/w/api.php?action=parse&format=json&section=1&page=" + dateStr)
-
 	if err != nil {
 		return
 	}
 
 	wikiData, err := ioutil.ReadAll(resp.Body)
-
 	if err != nil {
 		return
 	}
 
-	dataStr := string(wikiData)
-
-	matches := utils.EventsPattern.FindAllStringSubmatch(dataStr, -1)
+	matches := utils.EventsPattern.FindAllStringSubmatch(string(wikiData), -1)
 
 	cleanMatches := make([]data.Event, 0)
 
@@ -66,11 +88,13 @@ func FetchEvents(c *gin.Context) {
 			}
 		}
 
-		cleanMatches = append(cleanMatches, data.Event{
-			Year:    year,
-			YearInt: yearInt,
-			Event:   utils.CleanPattern.ReplaceAllString(event, ""),
-		})
+		if yearInt >= minYear && yearInt <= maxYear {
+			cleanMatches = append(cleanMatches, data.Event{
+				Year:    year,
+				YearInt: yearInt,
+				Event:   utils.CleanPattern.ReplaceAllString(event, ""),
+			})
+		}
 	}
 
 	c.IndentedJSON(200, cleanMatches)
