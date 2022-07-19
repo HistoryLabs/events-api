@@ -41,11 +41,13 @@ func FetchYear(c *gin.Context) {
 
 	resp, err := http.Get("https://en.wikipedia.org/w/api.php?action=parse&format=json&section=1&redirects=true&page=" + wikiYear)
 	if err != nil {
+		c.AbortWithStatus(500)
 		return
 	}
 
 	wikiData, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
+		c.AbortWithStatus(500)
 		return
 	}
 

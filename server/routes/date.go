@@ -48,6 +48,7 @@ func FetchDate(c *gin.Context) {
 
 	monthInt, err := strconv.Atoi(month)
 	if err != nil {
+		c.AbortWithStatus(500)
 		return
 	}
 
@@ -55,11 +56,13 @@ func FetchDate(c *gin.Context) {
 
 	resp, err := http.Get("https://en.wikipedia.org/w/api.php?action=parse&format=json&section=1&page=" + dateStr)
 	if err != nil {
+		c.AbortWithStatus(500)
 		return
 	}
 
 	wikiData, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
+		c.AbortWithStatus(500)
 		return
 	}
 
@@ -79,11 +82,13 @@ func FetchDate(c *gin.Context) {
 			yearInt, err = strconv.Atoi(cleanYear)
 			yearInt = yearInt * -1
 			if err != nil {
+				c.AbortWithStatus(500)
 				return
 			}
 		} else {
 			yearInt, err = strconv.Atoi(year)
 			if err != nil {
+				c.AbortWithStatus(500)
 				return
 			}
 		}
