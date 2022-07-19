@@ -14,6 +14,7 @@ import (
 
 func FetchYear(c *gin.Context) {
 	yearStr, yearValid := c.GetQuery("year")
+	onlyDated := c.Query("onlyDated")
 
 	if yearValid == false {
 		c.IndentedJSON(400, gin.H{"message": "You must provide a year to find events for"})
@@ -57,9 +58,16 @@ func FetchYear(c *gin.Context) {
 	for _, match := range matches {
 		cleanMatch := utils.RemoveHTMLPattern.ReplaceAllString(match[0], "")
 		splitMatch := strings.Split(cleanMatch, "&#8211;")
-		if len(splitMatch) >= 2 {
-			date := strings.TrimSpace(splitMatch[0])
-			event := strings.TrimSpace(splitMatch[1])
+		if onlyDated != "true" || len(splitMatch) >= 2 {
+			var date string
+			var event string
+
+			if len(splitMatch) >= 2 {
+				date = strings.TrimSpace(splitMatch[0])
+				event = strings.TrimSpace(splitMatch[1])
+			} else {
+				event = cleanMatch
+			}
 
 			cleanMatches = append(cleanMatches, data.Year{
 				Date:  date,
