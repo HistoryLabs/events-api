@@ -57,7 +57,7 @@ func FetchYear(c *gin.Context) {
 
 	for _, match := range matches {
 		cleanMatch := utils.RemoveHTMLPattern.ReplaceAllString(match[0], "")
-		splitMatch := strings.Split(cleanMatch, "&#8211;")
+		splitMatch := strings.SplitN(cleanMatch, "&#8211;", 2)
 		if onlyDated != "true" || len(splitMatch) >= 2 {
 			var date string
 			var event string
