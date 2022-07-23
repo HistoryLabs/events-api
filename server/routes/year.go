@@ -35,7 +35,7 @@ func FetchYear(c *gin.Context) {
 	var wikiYear string
 
 	if yearInt < 0 {
-		wikiYear = strconv.FormatFloat(math.Abs(float64(yearInt)), 'E', -1, 64) + "_BC"
+		wikiYear = strconv.Itoa(int(math.Abs(float64(yearInt)))) + "_BC"
 	} else {
 		wikiYear = "AD_" + yearStr
 	}
