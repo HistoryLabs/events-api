@@ -68,7 +68,7 @@ func FetchDate(c *gin.Context) {
 
 	matches := utils.EventsPattern.FindAllStringSubmatch(string(wikiData), -1)
 
-	cleanMatches := make([]data.Event, 0)
+	cleanMatches := make([]data.DateEvent, 0)
 
 	for _, match := range matches {
 		cleanMatch := utils.RemoveHTMLPattern.ReplaceAllString(match[0], "")
@@ -94,7 +94,7 @@ func FetchDate(c *gin.Context) {
 		}
 
 		if yearInt >= minYear && yearInt <= maxYear {
-			cleanMatches = append(cleanMatches, data.Event{
+			cleanMatches = append(cleanMatches, data.DateEvent{
 				Year:    year,
 				YearInt: yearInt,
 				Event:   utils.FormatPattern.ReplaceAllString(utils.CleanPattern.ReplaceAllString(event, ""), "–"),
@@ -102,5 +102,9 @@ func FetchDate(c *gin.Context) {
 		}
 	}
 
-	c.IndentedJSON(200, cleanMatches)
+	c.IndentedJSON(200, data.DateDto{
+		TotalResults: len(cleanMatches),
+		SourceUrl:    "https://en.wikipedia.org/wiki/" + dateStr,
+		Events:       cleanMatches,
+	})
 }
