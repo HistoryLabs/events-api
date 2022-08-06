@@ -11,7 +11,7 @@ You can find the most recent version of the API deployed at https://events.histo
 ### GET /date
 
 ```http
-GET https://events.historylabs.io/date
+GET /date
 ```
 
 #### Parameters
@@ -55,11 +55,10 @@ GET https://events.historylabs.io/date
 }
 ```
 
-
 ### GET /year
 
 ```http
-GET https://events.historylabs.io/year
+GET /year
 ```
 
 #### Parameters
