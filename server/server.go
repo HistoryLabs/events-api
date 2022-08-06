@@ -8,6 +8,7 @@ import (
 func Init() {
 	router := gin.Default()
 
+	router.GET("/", routes.Home)
 	router.GET("/date", routes.FetchDate)
 	router.GET("/year", routes.FetchYear)
 
