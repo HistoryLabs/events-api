@@ -53,7 +53,7 @@ func FetchYear(c *gin.Context) {
 	}
 
 	matches := utils.EventsPattern.FindAllStringSubmatch(string(wikiData), -1)
-	cleanMatches := make([]data.Year, 0)
+	cleanMatches := make([]data.YearEvent, 0)
 
 	for _, match := range matches {
 		cleanMatch := utils.RemoveHTMLPattern.ReplaceAllString(match[0], "")
@@ -69,12 +69,16 @@ func FetchYear(c *gin.Context) {
 				event = cleanMatch
 			}
 
-			cleanMatches = append(cleanMatches, data.Year{
+			cleanMatches = append(cleanMatches, data.YearEvent{
 				Date:  date,
 				Event: utils.FormatPattern.ReplaceAllString(utils.CleanPattern.ReplaceAllString(event, ""), "–"),
 			})
 		}
 	}
 
-	c.IndentedJSON(200, cleanMatches)
+	c.IndentedJSON(200, data.YearDto{
+		TotalResults: len(cleanMatches),
+		SourceUrl:    "https://en.wikipedia.org/wiki/" + wikiYear,
+		Events:       cleanMatches,
+	})
 }

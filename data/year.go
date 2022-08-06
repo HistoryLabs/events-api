@@ -1,6 +1,12 @@
 package data
 
-type Year struct {
+type YearDto struct {
+	TotalResults int         `json:"totalResults"`
+	SourceUrl    string      `json:"sourceUrl"`
+	Events       []YearEvent `json:"events"`
+}
+
+type YearEvent struct {
 	Date  string `json:"date"`
 	Event string `json:"event"`
 }
