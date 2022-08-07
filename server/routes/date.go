@@ -29,7 +29,7 @@ func FetchDate(c *gin.Context) {
 	if len(strings.TrimSpace(minYearStr)) > 0 {
 		minYearInt, err := strconv.Atoi(minYearStr)
 		if err != nil {
-			c.IndentedJSON(400, gin.H{"message": "'minYear' must be a valid integer"})
+			c.IndentedJSON(400, gin.H{"message": "Parameter 'minYear' must be a valid integer"})
 			return
 		}
 
@@ -39,7 +39,7 @@ func FetchDate(c *gin.Context) {
 	if len(strings.TrimSpace(maxYearStr)) > 0 {
 		maxYearInt, err := strconv.Atoi(maxYearStr)
 		if err != nil {
-			c.IndentedJSON(400, gin.H{"message": "'maxYear' must be a valid integer"})
+			c.IndentedJSON(400, gin.H{"message": "Parameter 'maxYear' must be a valid integer"})
 			return
 		}
 
@@ -49,6 +49,22 @@ func FetchDate(c *gin.Context) {
 	monthInt, err := strconv.Atoi(month)
 	if err != nil {
 		c.AbortWithStatus(500)
+		return
+	}
+
+	if monthInt > 12 || monthInt < 1 {
+		c.IndentedJSON(400, gin.H{"message": "Parameter 'month' must be a valid integer from 1 to 12"})
+		return
+	}
+
+	dayInt, err := strconv.Atoi(day)
+	if err != nil {
+		c.AbortWithStatus(500)
+		return
+	}
+
+	if dayInt > 31 || dayInt < 0 {
+		c.IndentedJSON(400, gin.H{"message": "Parameter 'day' must be a valid integer from 1 to 31"})
 		return
 	}
 
@@ -92,6 +108,8 @@ func FetchDate(c *gin.Context) {
 				return
 			}
 		}
+
+		//time.Date(yearInt, time.Month(monthInt), day, 0, 0, 0, 0, time.Local)
 
 		if yearInt >= minYear && yearInt <= maxYear {
 			cleanMatches = append(cleanMatches, data.DateEvent{
