@@ -28,7 +28,7 @@ func FetchYear(c *gin.Context) {
 	}
 
 	if yearInt < -500 || yearInt > time.Now().Year() {
-		c.IndentedJSON(400, gin.H{"message": "'year' must be greater than -500 and less than the current year"})
+		c.IndentedJSON(400, gin.H{"message": "Parameter 'year' must be greater than -500 and less than the current year"})
 		return
 	}
 
