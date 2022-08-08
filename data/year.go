@@ -7,6 +7,6 @@ type YearDto struct {
 }
 
 type YearEvent struct {
-	Date  string `json:"date"`
-	Event string `json:"event"`
+	Date    string `json:"date"`
+	Content string `json:"content"`
 }

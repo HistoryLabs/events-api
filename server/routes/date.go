@@ -109,13 +109,11 @@ func FetchDate(c *gin.Context) {
 			}
 		}
 
-		//time.Date(yearInt, time.Month(monthInt), day, 0, 0, 0, 0, time.Local)
-
 		if yearInt >= minYear && yearInt <= maxYear {
 			cleanMatches = append(cleanMatches, data.DateEvent{
 				Year:    year,
 				YearInt: yearInt,
-				Event:   utils.FormatPattern.ReplaceAllString(utils.CleanPattern.ReplaceAllString(event, ""), "–"),
+				Content: utils.FormatPattern.ReplaceAllString(utils.CleanPattern.ReplaceAllString(event, ""), "–"),
 			})
 		}
 	}
