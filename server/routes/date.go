@@ -91,43 +91,38 @@ func FetchDate(c *gin.Context) {
 		cleanMatch := utils.RemoveHTMLPattern.ReplaceAllString(match[0], "")
 		splitMatch := strings.SplitN(cleanMatch, "&#8211;", 2)
 
-		if len(splitMatch) < 2 {
-			return
-		}
+		if len(splitMatch) == 2 {
+			year := strings.TrimSpace(splitMatch[0])
+			event := strings.TrimSpace(splitMatch[1])
 
-		year := strings.TrimSpace(splitMatch[0])
-		event := strings.TrimSpace(splitMatch[1])
-
-		event, err = strconv.Unquote(`"` + event + `"`)
-		if err != nil {
-			c.AbortWithStatus(500)
-			return
-		}
-
-		var yearInt int
-
-		if strings.Contains(year, "BC") {
-			cleanYear := strings.TrimSpace(strings.ReplaceAll(year, "BC", ""))
-			yearInt, err = strconv.Atoi(cleanYear)
-			yearInt = yearInt * -1
+			event, err = strconv.Unquote(`"` + event + `"`)
 			if err != nil {
-				c.AbortWithStatus(500)
-				return
+				continue
 			}
-		} else {
-			yearInt, err = strconv.Atoi(year)
-			if err != nil {
-				c.AbortWithStatus(500)
-				return
-			}
-		}
 
-		if yearInt >= minYear && yearInt <= maxYear {
-			cleanMatches = append(cleanMatches, data.DateEvent{
-				Year:    year,
-				YearInt: yearInt,
-				Content: html.UnescapeString(utils.FormatPattern.ReplaceAllString(utils.CleanPattern.ReplaceAllString(event, ""), "–")),
-			})
+			var yearInt int
+
+			if strings.Contains(year, "BC") {
+				cleanYear := strings.TrimSpace(strings.ReplaceAll(year, "BC", ""))
+				yearInt, err = strconv.Atoi(cleanYear)
+				yearInt = yearInt * -1
+				if err != nil {
+					continue
+				}
+			} else {
+				yearInt, err = strconv.Atoi(year)
+				if err != nil {
+					continue
+				}
+			}
+
+			if yearInt >= minYear && yearInt <= maxYear {
+				cleanMatches = append(cleanMatches, data.DateEvent{
+					Year:    year,
+					YearInt: yearInt,
+					Content: html.UnescapeString(utils.FormatPattern.ReplaceAllString(utils.CleanPattern.ReplaceAllString(event, ""), "–")),
+				})
+			}
 		}
 	}
 
