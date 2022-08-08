@@ -89,8 +89,14 @@ func FetchDate(c *gin.Context) {
 
 	for _, match := range matches {
 		cleanMatch := utils.RemoveHTMLPattern.ReplaceAllString(match[0], "")
-		year := strings.TrimSpace(strings.SplitN(cleanMatch, "&#8211;", 2)[0])
-		event := strings.TrimSpace(strings.SplitN(cleanMatch, "&#8211;", 2)[1])
+		splitMatch := strings.SplitN(cleanMatch, "&#8211;", 2)
+
+		if len(splitMatch) < 2 {
+			return
+		}
+
+		year := strings.TrimSpace(splitMatch[0])
+		event := strings.TrimSpace(splitMatch[1])
 
 		event, err = strconv.Unquote(`"` + event + `"`)
 		if err != nil {
