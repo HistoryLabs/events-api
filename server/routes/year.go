@@ -4,6 +4,7 @@ import (
 	"github.com/HistoryLabs/events-api/data"
 	"github.com/HistoryLabs/events-api/utils"
 	"github.com/gin-gonic/gin"
+	"html"
 	"io/ioutil"
 	"math"
 	"net/http"
@@ -69,7 +70,7 @@ func FetchYear(c *gin.Context) {
 				event = cleanMatch
 			}
 
-			unquotedEvent, err := strconv.Unquote(`"` + event + `"`)
+			event, err = strconv.Unquote(`"` + event + `"`)
 			if err != nil {
 				c.AbortWithStatus(500)
 				return
@@ -77,7 +78,7 @@ func FetchYear(c *gin.Context) {
 
 			cleanMatches = append(cleanMatches, data.YearEvent{
 				Date:    date,
-				Content: utils.FormatPattern.ReplaceAllString(utils.CleanPattern.ReplaceAllString(unquotedEvent, ""), "–"),
+				Content: html.UnescapeString(utils.FormatPattern.ReplaceAllString(utils.CleanPattern.ReplaceAllString(event, ""), "–")),
 			})
 		}
 	}

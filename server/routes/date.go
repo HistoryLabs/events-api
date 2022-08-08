@@ -4,6 +4,7 @@ import (
 	"github.com/HistoryLabs/events-api/data"
 	"github.com/HistoryLabs/events-api/utils"
 	"github.com/gin-gonic/gin"
+	"html"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -89,9 +90,9 @@ func FetchDate(c *gin.Context) {
 	for _, match := range matches {
 		cleanMatch := utils.RemoveHTMLPattern.ReplaceAllString(match[0], "")
 		year := strings.TrimSpace(strings.SplitN(cleanMatch, "&#8211;", 2)[0])
-		dirtyEvent := strings.TrimSpace(strings.SplitN(cleanMatch, "&#8211;", 2)[1])
+		event := strings.TrimSpace(strings.SplitN(cleanMatch, "&#8211;", 2)[1])
 
-		event, err := strconv.Unquote(`"` + dirtyEvent + `"`)
+		event, err = strconv.Unquote(`"` + event + `"`)
 		if err != nil {
 			c.AbortWithStatus(500)
 			return
@@ -119,7 +120,7 @@ func FetchDate(c *gin.Context) {
 			cleanMatches = append(cleanMatches, data.DateEvent{
 				Year:    year,
 				YearInt: yearInt,
-				Content: utils.FormatPattern.ReplaceAllString(utils.CleanPattern.ReplaceAllString(event, ""), "–"),
+				Content: html.UnescapeString(utils.FormatPattern.ReplaceAllString(utils.CleanPattern.ReplaceAllString(event, ""), "–")),
 			})
 		}
 	}
