@@ -33,22 +33,22 @@ GET /date
         {
             "year": "537",
             "yearInt": 537,
-            "event": "Siege of Rome: The Ostrogoth army under king Vitiges begins the siege of the capital. Belisarius conducts a delaying action outside the Flaminian Gate; he and a detachment of his bucellarii are almost cut off."
+            "content": "Siege of Rome: The Ostrogoth army under king Vitiges begins the siege of the capital. Belisarius conducts a delaying action outside the Flaminian Gate; he and a detachment of his bucellarii are almost cut off."
         },
         {
             "year": "986",
             "yearInt": 986,
-            "event": "Louis V becomes the last Carolingian king of West Francia after the death of his father, Lothaire."
+            "content": "Louis V becomes the last Carolingian king of West Francia after the death of his father, Lothaire."
         },
         {
             "year": "1476",
             "yearInt": 1476,
-            "event": "Burgundian Wars: The Old Swiss Confederacy hands Charles the Bold, Duke of Burgundy, a major defeat in the Battle of Grandson in Canton of Neuch\âtel."
+            "content": "Burgundian Wars: The Old Swiss Confederacy hands Charles the Bold, Duke of Burgundy, a major defeat in the Battle of Grandson in Canton of Neuch\âtel."
         },
         {
             "year": "1484",
             "yearInt": 1484,
-            "event": "The College of Arms is formally incorporated by Royal Charter signed by King Richard III of England."
+            "content": "The College of Arms is formally incorporated by Royal Charter signed by King Richard III of England."
         },
         "..."
     ]
@@ -76,31 +76,31 @@ GET /year
     "events": [
         {
             "date": "January 5",
-            "event": "Duke Ludovico Sforza recaptures Milan, but is soon driven out again by the French."
+            "content": "Duke Ludovico Sforza recaptures Milan, but is soon driven out again by the French."
         },
         {
             "date": "February 17",
-            "event": "Battle of Hemmingstedt: The Danish army fails to conquer the peasants' republic of Dithmarschen."
+            "content": "Battle of Hemmingstedt: The Danish army fails to conquer the peasants' republic of Dithmarschen."
         },
         {
             "date": "July 14",
-            "event": "The Muscovites defeat the Lithuanians and the Poles in the Battle of Vedrosha."
+            "content": "The Muscovites defeat the Lithuanians and the Poles in the Battle of Vedrosha."
         },
         {
             "date": "August 10",
-            "event": "Diogo Dias discovers an island which he names St Lawrence (after the saint's day on which it was first sighted), later to be known as Madagascar."
+            "content": "Diogo Dias discovers an island which he names St Lawrence (after the saint's day on which it was first sighted), later to be known as Madagascar."
         },
         {
             "date": "November 11",
-            "event": "Treaty of Granada: Louis XII of France and Ferdinand II of Aragon agree to divide the Kingdom of Naples between them."
+            "content": "Treaty of Granada: Louis XII of France and Ferdinand II of Aragon agree to divide the Kingdom of Naples between them."
         },
         {
             "date": "December 31",
-            "event": "The last incunable is printed in Venice."
+            "content": "The last incunable is printed in Venice."
         },
         {
             "date": "",
-            "event": "Europe's population is estimated at 56.7 million people (Spielvogel)."
+            "content": "Europe's population is estimated at 56.7 million people (Spielvogel)."
         },
         "..."
     ]
