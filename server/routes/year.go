@@ -69,9 +69,15 @@ func FetchYear(c *gin.Context) {
 				event = cleanMatch
 			}
 
+			unquotedEvent, err := strconv.Unquote(`"` + event + `"`)
+			if err != nil {
+				c.AbortWithStatus(500)
+				return
+			}
+
 			cleanMatches = append(cleanMatches, data.YearEvent{
 				Date:    date,
-				Content: utils.FormatPattern.ReplaceAllString(utils.CleanPattern.ReplaceAllString(event, ""), "–"),
+				Content: utils.FormatPattern.ReplaceAllString(utils.CleanPattern.ReplaceAllString(unquotedEvent, ""), "–"),
 			})
 		}
 	}
