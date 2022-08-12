@@ -13,6 +13,8 @@ import (
 )
 
 func FetchDate(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+
 	month, monthValid := c.GetQuery("month")
 	day, dayValid := c.GetQuery("day")
 
