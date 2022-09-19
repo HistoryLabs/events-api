@@ -65,7 +65,7 @@ GET /year
 
 |     Parameter    |        Type       | Default Value |               Description               |
 |:----------------:|:-----------------:|:-------------:|:---------------------------------------:|
-| `onlyDate` (opt) | `true` or `false` |    `false`    | Will only give events that have a date. |
+| `onlyDated` (opt) | `true` or `false` |    `false`    | Will only give events that have a date. |
 
 #### Return DTO
 
