@@ -14,8 +14,6 @@ import (
 )
 
 func FetchYear(c *gin.Context) {
-	c.Header("Access-Control-Allow-Origin", "*")
-
 	yearStr := c.Param("year")
 	onlyDated := c.Query("onlyDated")
 
