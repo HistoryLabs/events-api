@@ -14,7 +14,7 @@ You can find the most recent version of the API deployed at https://events.histo
 GET /date
 ```
 
-#### Parameters
+#### Query Parameters
 
 |    Parameter    |       Type       |  Default |                                        Description                                       |
 |:---------------:|:----------------:|:--------:|:----------------------------------------------------------------------------------------:|
@@ -55,13 +55,18 @@ GET /date
 }
 ```
 
-### GET /year
+### GET /year/:year
 
 ```http
-GET /year
+GET /year/:year
 ```
 
-#### Parameters
+#### Path Parameters
+| Parameter |           Type           |          Description         |
+|:---------:|:------------------------:|:----------------------------:|
+|   `year`  | `int` (`-500` to `2023`) | The year to find events for. |
+
+#### Query Parameters
 
 |     Parameter    |        Type       | Default Value |               Description               |
 |:----------------:|:-----------------:|:-------------:|:---------------------------------------:|
