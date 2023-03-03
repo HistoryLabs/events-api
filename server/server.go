@@ -10,7 +10,7 @@ func Init() {
 
 	router.GET("/", routes.Home)
 	router.GET("/date", routes.FetchDate)
-	router.GET("/year", routes.FetchYear)
+	router.GET("/year/*year", routes.FetchYear)
 
 	router.Run("localhost:5000")
 }

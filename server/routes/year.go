@@ -16,12 +16,18 @@ import (
 func FetchYear(c *gin.Context) {
 	c.Header("Access-Control-Allow-Origin", "*")
 
-	yearStr, yearValid := c.GetQuery("year")
+	yearStr := c.Param("year")
 	onlyDated := c.Query("onlyDated")
 
-	if yearValid == false {
-		c.IndentedJSON(400, gin.H{"message": "You must provide a year to find events for"})
-		return
+	if yearStr == "/" {
+		yearStr = c.Query("year")
+
+		if yearStr == "" {
+			c.IndentedJSON(400, gin.H{"message": "You must provide a year to find events for"})
+			return
+		}
+	} else {
+		yearStr = strings.Replace(yearStr, "/", "", 1)
 	}
 
 	yearInt, err := strconv.Atoi(yearStr)
