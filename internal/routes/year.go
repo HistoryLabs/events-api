@@ -8,9 +8,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/HistoryLabs/events-api/data"
+	"github.com/HistoryLabs/events-api/internal/models"
+	"github.com/HistoryLabs/events-api/internal/utils"
 	"github.com/HistoryLabs/events-api/internal/wiki"
-	"github.com/HistoryLabs/events-api/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -59,7 +59,7 @@ func FetchYear(c *gin.Context) {
 	}
 
 	matches := utils.EventsPattern.FindAllStringSubmatch(string(wikiData), -1)
-	cleanMatches := make([]data.YearEvent, 0)
+	cleanMatches := make([]models.YearEvent, 0)
 
 	for _, match := range matches {
 		cleanMatch := utils.RemoveHTMLPattern.ReplaceAllString(match[0], "")
@@ -81,14 +81,14 @@ func FetchYear(c *gin.Context) {
 				return
 			}
 
-			cleanMatches = append(cleanMatches, data.YearEvent{
+			cleanMatches = append(cleanMatches, models.YearEvent{
 				Date:    date,
 				Content: html.UnescapeString(utils.FormatPattern.ReplaceAllString(utils.CleanPattern.ReplaceAllString(event, ""), "–")),
 			})
 		}
 	}
 
-	c.IndentedJSON(200, data.YearDto{
+	c.IndentedJSON(200, models.YearDto{
 		TotalResults: len(cleanMatches),
 		SourceUrl:    "https://en.wikipedia.org/wiki/" + wikiYear,
 		Events:       cleanMatches,
