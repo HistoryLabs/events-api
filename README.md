@@ -2,6 +2,14 @@
 
 An API that fetches historical events from Wikipedia. Built to provide data to "Today In History" style apps (such as the [Historian Discord Bot](https://github.com/HistoryLabs/historian-bot)).
 
+## Running locally
+
+```sh
+go run ./cmd/server
+```
+
+The server starts on `http://localhost:5000`.
+
 ## To use
 
 You can find the most recent version of the API deployed at https://events.historylabs.io/.

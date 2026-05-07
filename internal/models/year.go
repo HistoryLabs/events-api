@@ -1,4 +1,4 @@
-package data
+package models
 
 type YearDto struct {
 	TotalResults int         `json:"totalResults"`

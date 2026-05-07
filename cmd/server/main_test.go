@@ -3,14 +3,15 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/HistoryLabs/events-api/data"
-	"github.com/HistoryLabs/events-api/server/routes"
-	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"net/http/httptest"
 	"reflect"
 	"strconv"
 	"testing"
+
+	"github.com/HistoryLabs/events-api/internal/models"
+	"github.com/HistoryLabs/events-api/internal/routes"
+	"github.com/gin-gonic/gin"
 )
 
 func initRouter() *gin.Engine {
@@ -38,7 +39,7 @@ func TestDate(t *testing.T) {
 	}
 
 	body, _ := ioutil.ReadAll(rr.Body)
-	var dateData data.DateDto
+	var dateData models.DateDto
 	json.Unmarshal(body, &dateData)
 
 	if dateData.TotalResults <= 0 {
@@ -61,7 +62,7 @@ func TestYear(t *testing.T) {
 	router := initRouter()
 	router.GET("/year/*year", routes.FetchYear)
 
-	testEvents := func(yearData data.YearDto) {
+	testEvents := func(yearData models.YearDto) {
 		if yearData.TotalResults <= 0 {
 			t.Errorf("Expected at least one Event but got 0")
 			return
@@ -75,9 +76,9 @@ func TestYear(t *testing.T) {
 		}
 	}
 
-	getBody := func(rawBody *bytes.Buffer) data.YearDto {
+	getBody := func(rawBody *bytes.Buffer) models.YearDto {
 		body, _ := ioutil.ReadAll(rawBody)
-		var yearData data.YearDto
+		var yearData models.YearDto
 		json.Unmarshal(body, &yearData)
 		return yearData
 	}

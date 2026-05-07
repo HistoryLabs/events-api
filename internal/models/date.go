@@ -1,9 +1,9 @@
-package data
+package models
 
 type DateDto struct {
 	TotalResults int         `json:"totalResults"`
 	SourceUrl    string      `json:"sourceUrl"`
-	Events       []DateEvent `json:"events"'`
+	Events       []DateEvent `json:"events"`
 }
 
 type DateEvent struct {
