@@ -1,15 +1,16 @@
 package routes
 
 import (
-	"github.com/HistoryLabs/events-api/data"
-	"github.com/HistoryLabs/events-api/utils"
-	"github.com/gin-gonic/gin"
+	"errors"
 	"html"
-	"io/ioutil"
-	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/HistoryLabs/events-api/data"
+	"github.com/HistoryLabs/events-api/internal/wiki"
+	"github.com/HistoryLabs/events-api/utils"
+	"github.com/gin-gonic/gin"
 )
 
 func FetchDate(c *gin.Context) {
@@ -71,14 +72,12 @@ func FetchDate(c *gin.Context) {
 
 	dateStr := time.Month(monthInt).String() + "_" + day
 
-	resp, err := http.Get("https://en.wikipedia.org/w/api.php?action=parse&format=json&section=1&page=" + dateStr)
+	wikiData, err := wiki.Fetch(c.Request.Context(), dateStr, wiki.FetchOpts{Section: 1})
 	if err != nil {
-		c.AbortWithStatus(500)
-		return
-	}
-
-	wikiData, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
+		if errors.Is(err, wiki.ErrUpstreamStatus) {
+			c.AbortWithStatus(502)
+			return
+		}
 		c.AbortWithStatus(500)
 		return
 	}
