@@ -1,5 +1,18 @@
 # Events API
 
+> [!NOTE]
+> **This project is archived and no longer maintained.**
+>
+> Wikipedia now offers an official "On this day" feed that covers the main use case of this API:
+>
+> ```
+> https://api.wikimedia.org/feed/v1/wikipedia/en/onthisday/events/{MM}/{DD}
+> ```
+>
+> See the [Wikifeeds API documentation](https://www.mediawiki.org/wiki/Wikifeeds_API). The feed also supports `births`, `deaths`, `holidays`, `selected` and `all`. Its paths may change over time.
+>
+> This repo scraped Wikipedia's date and year pages directly, so it also had a `GET /year/:year` endpoint, which, as far as I know, the official feed doesn't have. The code is left here for reference and may stop working if Wikipedia changes its page layout.
+
 An API that fetches historical events from Wikipedia. Built to provide data to "Today In History" style apps (such as the [Historian Discord Bot](https://github.com/HistoryLabs/historian-bot)).
 
 ## Running locally
